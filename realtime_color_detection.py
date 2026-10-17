@@ -1,6 +1,12 @@
 """Real-time red and blue color detection using a laptop webcam and OpenCV.
+   How to Run:
+   1. Click the dropdown arrow to the right of the triangle "Run" button.
+   2. Select "Run Python File in Terminal" from the dropdown menu.
+   3. A window will open showing the webcam feed with red and blue areas highlighted.
+   4. Enjoy!
 
-Press Q or Esc to quit.
+
+Press any key in the video window to quit.
 """
 
 import argparse
@@ -67,6 +73,8 @@ def draw_detections(
 
 
 def main() -> int:
+    
+    camera = cv2.VideoCapture(0)
     parser = argparse.ArgumentParser(description="Detect red and blue areas from a webcam feed.")
     parser.add_argument(
         "--camera",
@@ -89,7 +97,7 @@ def main() -> int:
     camera.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
     camera.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
 
-    print("Red/blue color detection started. Press Q or Esc in the video window to quit.")
+    print("Red/blue color detection started. Press any key in the video window to quit.")
 
     try:
         while True:
@@ -135,8 +143,9 @@ def main() -> int:
 
             cv2.imshow("Real-Time Red & Blue Color Detection", frame)
 
-            key = cv2.waitKey(1) & 0xFF
-            if key == ord("q") or key == 27:  # q or Esc
+            key = cv2.waitKey(1) 
+            
+            if key != -1:
                 break
     finally:
         camera.release()
